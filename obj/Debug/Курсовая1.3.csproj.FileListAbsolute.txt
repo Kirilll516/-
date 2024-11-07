@@ -1,0 +1,6 @@
+D:\obj\Debug\Курсовая1.3.csproj.AssemblyReference.cache
+D:\obj\Debug\Курсовая1._3.Auth.resources
+D:\obj\Debug\Курсовая1._3.menu.resources
+D:\obj\Debug\Курсовая1._3.Quesstion1.resources
+D:\obj\Debug\Курсовая1._3.Reg.resources
+D:\obj\Debug\Курсовая1.3.csproj.GenerateResource.cache
