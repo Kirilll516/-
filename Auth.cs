@@ -13,9 +13,9 @@ namespace Курсовая1._3
 {
     public partial class Auth : Form
     {
-        private string connectionString = "Data Source = DESKTOP-MQR04MO SQLEXPRESS; Initial Catalog = test1; Integrated Security = True; Encrypt = False";
+        private string connectionString = "Data Source = Cab109,49172; Initial Catalog = master2; Integrated Security = True; Encrypt = False";
 
-        SqlConnection SqlConnection = new SqlConnection();
+         
 
 
         private object checkBox;
@@ -42,12 +42,21 @@ namespace Курсовая1._3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Создаем экземпляр второй формы
-            menu form2 = new menu();
-            // Показываем вторую форму
-            
-            form2.Show();
-            this.Hide(); 
+            string username = textBox1.Text;
+            string password = textBox2.Text;
+            if (ValidateUser(username, password))
+            {
+                MessageBox.Show("Вы вошли в свой аккаунт", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                menu form = new menu();
+                this.Hide();
+                form.Show();
+            }
+            else
+            {
+                MessageBox.Show("Неправильный логин или пароль!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox1.Text = "";
+                textBox2.Text = "";
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -57,6 +66,24 @@ namespace Курсовая1._3
          
             form2.Show();
             this.Hide();
+
+
+        }
+
+        private bool ValidateUser(string login, string password)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT COUNT(1) FROM users WHERE login = @login and Password = @Password";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@login", login);
+                    command.Parameters.AddWithValue("@Password", password);
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    return (count == 1);
+                }
+            }
         }
     }
 }
